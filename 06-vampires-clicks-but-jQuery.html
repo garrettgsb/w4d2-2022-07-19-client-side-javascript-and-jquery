@@ -92,34 +92,6 @@
         },
       ]
     };
-
-    function distanceFromRoot(node, distance=0) {
-      if (node[0].tagName !== 'DIV') return Infinity;
-      const name = node.children('.vampire-name').text();
-      if (name === 'Root') return distance;
-      return distanceFromRoot(node.parent(), distance+1);
-    }
-
-    function createVampire(name) {
-      const element = $('<div>')
-        .html(`🧛‍♀️ <span class='vampire-name'>${name}</span>`)
-        .on('click', (event) => {
-          event.stopPropagation(); // Something weird happens if you don't stopPropagation 🤔
-          alert(`${name} is ${distanceFromRoot(element)} from the Root`);
-        });
-      return element[0];
-    }
-
-    function buildVampireTree(node) {
-      const element = createVampire(node.name);
-      node.children?.forEach(child => {
-        element.appendChild(buildVampireTree(child));
-      });
-      return element;
-    }
-
-    const vampireNodeTree = buildVampireTree(vampireTree);
-    $('body').append(vampireNodeTree);
   </script>
 </body>
 </html>

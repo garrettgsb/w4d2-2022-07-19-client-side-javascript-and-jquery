@@ -44,52 +44,6 @@
 </head>
 <body>
   <script>
-    function findVampire(name) {
-      const vampires = Array.from(document.querySelectorAll('.vampire-name'));
-      const vampireName = vampires.find(vampire => vampire.innerText.toLowerCase() === name.toLowerCase());
-      return vampireName?.parentElement;
-    }
-
-    function createVampire(name) {
-      const element = document.createElement('div')
-      const content = `🧛‍♀️ <span class='vampire-name'>${name}</span>`
-      element.innerHTML = content;
-      element.addEventListener('click', (event) => {
-          event.stopPropagation();
-          openModalFor(element);
-        });
-      return element;
-    }
-
-    function openModalFor(vampire) {
-      const modal = document.createElement('aside')
-      modal.innerHTML = `
-      <h1>🧛‍♀️</h1>
-      <h2>New Vampire</h2>
-      <input id='new-vampire-name' />
-      <button id='new-vampire-create'>Create</button>
-      <button id='new-vampire-cancel'>Cancel</button>
-      `
-      modal.querySelector('#new-vampire-create').addEventListener('click', () => {
-        vampire.appendChild(createVampire(document.querySelector('#new-vampire-name').value));
-        modal.remove();
-      });
-
-      modal.querySelector('#new-vampire-cancel').addEventListener('click', () => {
-        modal.remove();
-      });
-      document.querySelector('body').appendChild(modal);
-      document.querySelector('#new-vampire-name').focus();
-    }
-
-    document.addEventListener('DOMContentLoaded', () => {
-      document.querySelectorAll('div').forEach(vampire => {
-        vampire.addEventListener('click', (event) => {
-          event.stopPropagation();
-          openModalFor(vampire);
-        });
-      });
-    });
   </script>
   <div>
     🧛‍♀️ <span class="vampire-name">Root</span>

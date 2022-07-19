@@ -92,34 +92,25 @@
       ]
     };
 
-    function distanceFromRoot(node, distance=0) {
-      if (node.tagName !== 'DIV') return Infinity;
-      const name = node.querySelector('.vampire-name').innerText;
-      if (name === 'Root') return distance;
-      return distanceFromRoot(node.parentElement, distance+1);
-    }
-
-    function createVampire(name) {
-      const element = document.createElement('div')
-      const content = `🧛‍♀️ <span class='vampire-name'>${name}</span>`
-      element.innerHTML = content;
-      element.addEventListener('click', (event) => {
-        event.stopPropagation(); // Something weird happens if you don't stopPropagation 🤔
-        alert(`${name} is ${distanceFromRoot(element)} from the Root`);
-      });
-      return element;
-    }
-
+    const body = document.querySelector('body');
     function buildVampireTree(node) {
-      const element = createVampire(node.name);
-      node.children?.forEach(child => {
-        element.appendChild(buildVampireTree(child));
+      const vampireElement = document.createElement('div');
+      vampireElement.innerHTML = `🧛‍♂️ <span>${node.name}</span>`;
+      vampireElement.addEventListener('click', (event) => {
+        event.stopPropagation();
+        alert(`Clicked ${node.name}`);
       });
-      return element;
+      node.children?.forEach(child => {
+        const childTree = buildVampireTree(child);
+        vampireElement.append(childTree);
+      });
+      return vampireElement;
     }
 
-    const vampireNodeTree = buildVampireTree(vampireTree);
-    document.querySelector('body').appendChild(vampireNodeTree);
+    const theWholeTree = buildVampireTree(vampireTree);
+    body.append(theWholeTree);
+
+
   </script>
 </body>
 </html>
